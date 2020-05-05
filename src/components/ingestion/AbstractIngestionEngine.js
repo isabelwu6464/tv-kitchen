@@ -1,4 +1,6 @@
+import 'module-alias/register'
 import { spawn } from 'child_process'
+import logger from '%src/lib/logger'
 import kafka from '%src/lib/kafka'
 // import {
 // 	Payload,
@@ -11,9 +13,6 @@ class AbstractIngestionEngine {
 	producer = kafka.producer()
 
 	enqueueData = async (data) => {
-		const payload = {
-			data,
-		}
 		await this.producer.send({
 			topic: 'STREAM.DATA',
 			messages: [{
@@ -37,6 +36,7 @@ class AbstractIngestionEngine {
 			inputStream.pipe(ffmpegProcess.stdin)
 		}
 		this.recordStream(ffmpegProcess.stdout)
+		logger.info(`Starting ingestion from ${this.constructor.name}...`)
 	}
 
 	getFfmpegSettings = () => ['-i', this.getInputLocation(), '-f', 'mpegts', '-']
