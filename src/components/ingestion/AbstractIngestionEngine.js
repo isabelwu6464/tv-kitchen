@@ -41,6 +41,7 @@ class AbstractIngestionEngine {
 
 	getFfmpegSettings = () => [
 		'-i', this.getInputLocation(),
+		...this.getTranscodeSettings(),
 		'-f', 'mpegts',
 		'-',
 	]
@@ -50,6 +51,12 @@ class AbstractIngestionEngine {
 
 	// ABSTRACT OVERRIDE
 	getInputStream = () => null
+
+	// ABSTRACT OVERRIDE
+	validateInputLocation = () => null
+
+	// ABSTRACT OVERRIDE
+	getTranscodeSettings = () => []
 }
 
 export default AbstractIngestionEngine
