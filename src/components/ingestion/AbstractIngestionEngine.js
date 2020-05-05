@@ -39,7 +39,11 @@ class AbstractIngestionEngine {
 		logger.info(`Starting ingestion from ${this.constructor.name}...`)
 	}
 
-	getFfmpegSettings = () => ['-i', this.getInputLocation(), '-f', 'mpegts', '-']
+	getFfmpegSettings = () => [
+		'-i', this.getInputLocation(),
+		'-f', 'mpegts',
+		'-',
+	]
 
 	// OPTIONAL OVERRIDE
 	getInputLocation = () => '-'
